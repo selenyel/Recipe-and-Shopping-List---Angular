@@ -16,3 +16,4 @@ export class RecipeDetailComponent {
     this.recipeService.addIngredientsToShoppingList(this.recipe.ingredients);
   }
 }
+
