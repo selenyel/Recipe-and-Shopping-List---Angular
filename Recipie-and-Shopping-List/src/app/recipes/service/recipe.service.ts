@@ -40,6 +40,10 @@ export class RecipeService{
         // because array variables are reference types in JS  
     }
 
+    getRecipe(index:number){
+        return this.recipes[index];
+    }
+
     addIngredientsToShoppingList(ingredients : Ingredient[]){
         this.shoppingListService.addIngredientsForRecipeService(ingredients);
     }
