@@ -48,8 +48,10 @@ export class ShoppingEditComponent{
 
     const newIngredient = new Ingredient(ingName,ingAmount);
     // this.ingredientAdded.emit(newIngredient);
-
-    this.shoppingListService.addIngredients(newIngredient);
+    if(this.editMode)
+      this.shoppingListService.updateIngredient(this.editedItemIndex, newIngredient)
+    else
+      this.shoppingListService.addIngredients(newIngredient);
   }
 
   OnDestroy(){
