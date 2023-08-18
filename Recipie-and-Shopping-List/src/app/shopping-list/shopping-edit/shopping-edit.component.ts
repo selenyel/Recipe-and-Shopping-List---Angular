@@ -1,20 +1,35 @@
-import { Component, ElementRef, EventEmitter, ViewChild, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, ViewChild, Output, OnDestroy } from '@angular/core';
 import { Ingredient } from 'src/app/shared/ingredient.model';
 import { ShoppingListService } from '../service/shopping-list.service';
 import { NgForm } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-shopping-edit',
   templateUrl: './shopping-edit.component.html',
   styleUrls: ['./shopping-edit.component.sass']
 })
-export class ShoppingEditComponent {
+export class ShoppingEditComponent{
+
+  subscription: Subscription;
+  editMode = false;
+  editedItemIndex : number;
 
   // @ViewChild('nameInput', {static:false}) nameInputRef : ElementRef;
   // @ViewChild('amountInput', {static:false}) amountInputRef : ElementRef;
   // @Output() ingredientAdded = new EventEmitter<Ingredient>();
 
   constructor(private shoppingListService : ShoppingListService){}
+
+  ngOnInit(){
+    this.subscription = this.shoppingListService.startedEditing
+      .subscribe(
+        (index: number) => {
+          this.editedItemIndex = index;
+          this.editMode = true
+        }
+      );
+  }
 
   onAddItem(form: NgForm){
     const value = form.value;
@@ -27,5 +42,9 @@ export class ShoppingEditComponent {
     // this.ingredientAdded.emit(newIngredient);
 
     this.shoppingListService.addIngredients(newIngredient);
+  }
+
+  OnDestroy(){
+    this.subscription.unsubscribe();
   }
 }
