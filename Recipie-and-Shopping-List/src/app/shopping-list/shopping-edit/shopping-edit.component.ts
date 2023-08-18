@@ -14,6 +14,9 @@ export class ShoppingEditComponent{
   subscription: Subscription;
   editMode = false;
   editedItemIndex : number;
+  editedItem: Ingredient;
+
+  @ViewChild('formLocalRef', {static:false}) shoppingListForm : NgForm;
 
   // @ViewChild('nameInput', {static:false}) nameInputRef : ElementRef;
   // @ViewChild('amountInput', {static:false}) amountInputRef : ElementRef;
@@ -27,6 +30,11 @@ export class ShoppingEditComponent{
         (index: number) => {
           this.editedItemIndex = index;
           this.editMode = true
+          this.editedItem = this.shoppingListService.getIngredient(index)
+          this.shoppingListForm.setValue({
+            name: this.editedItem.name,
+            amount: this.editedItem.amount
+          })
         }
       );
   }

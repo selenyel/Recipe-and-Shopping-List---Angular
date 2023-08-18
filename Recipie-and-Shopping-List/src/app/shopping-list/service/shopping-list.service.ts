@@ -17,6 +17,10 @@ export class ShoppingListService{
         return this.ingredients.slice(); // only return a copy
     }
 
+    getIngredient(index: number){
+        return this.ingredients[index]; // only return a copy
+    }
+
     addIngredients(ingredient: Ingredient){
         this.ingredients.push(ingredient)
         // this.ingredientsChanged.emit(this.ingredients.slice());
